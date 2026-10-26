@@ -1,30 +1,8 @@
-name: Regression test
+name: Playwright Tests and Allure Report
 
 on:
-  workflow_dispatch:
-    inputs:
-      browser:
-        description: 'Choose browser to run tests'
-        required: true
-        default: 'chromium'
-        type: choice
-        options:
-          - chromium
-          - firefox
-      env:
-        description: 'Choose environment to run tests'
-        required: true
-        default: 'qa'
-        type: choice
-        options:
-          - qa
-      testtype:
-        description: 'Choose test-type to run tests'
-        required: true
-        default: 'regression'
-        type: choice
-        options:
-          - regression
+  push:
+    branches: [ main ]
 
 # Required permissions to publish to GitHub Pages
 permissions:
@@ -54,11 +32,8 @@ jobs:
       - name: Install Playwright browsers
         run: npx playwright install --with-deps
 
-      - name: Run Sanity tests
-        run: npx playwright test --grep "@sanity"
-        env:
-          BROWSER: ${{ github.event.inputs.browser }}
-          TEST_TYPE: 'sanity'
+      - name: Run Playwright tests
+        run: npx playwright test
         continue-on-error: true
 
       - name: Generate Allure Report
