@@ -1,7 +1,8 @@
 name: Playwright Tests and Allure Report
 
 on:
-  workflow_dispatch:
+  push:
+    branches: [ main ]
 
 # Required permissions to publish to GitHub Pages
 permissions:
